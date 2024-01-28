@@ -6,16 +6,23 @@ const initState = {
 		status: "All",
 		priority: [],
 	},
-	todoList: [{ id: 1, name: "JS", completed: false, priority: "High" }],
+	todoList: [],
 };
 
 const todoReducer = createSlice({
 	name: "todoList",
 	initialState: initState,
-	reducers: {},
+	reducers: {
+		addTodo: (state, action) => {
+			const todoItem = action.payload;
+			state.todoList.push(todoItem);
+		},
+		editTodo: (state, action) => {},
+		deleteTodo: (state, action) => {},
+	},
 });
 
 // Export
 const { reducer, actions } = todoReducer;
-export const { addTodo } = actions;
+export const { addTodo, editTodo, deleteTodo } = actions;
 export default reducer;
