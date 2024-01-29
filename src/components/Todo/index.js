@@ -28,8 +28,12 @@ export default function Todo({ name, priority, id, completed }) {
 					: {}),
 			}}
 		>
-			<Checkbox checked={checked} onChange={toggleCheckbox}>
-				{name}
+			<Checkbox
+				checked={checked}
+				onChange={toggleCheckbox}
+				style={{ flex: 1 }}
+			>
+				<span className='w-full'>{name}</span>
 			</Checkbox>
 			<Tag color={priorityColorMapping[priority]} style={{ margin: 0 }}>
 				{priority}

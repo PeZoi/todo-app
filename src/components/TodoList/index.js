@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import { todoListSelector } from "../../redux/selector";
 import { addTodo } from "../../redux/reducer";
+import toast from "react-hot-toast";
 
 export default function TodoList() {
 	const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export default function TodoList() {
 			);
 			setPriority("Medium");
 			setTodoName("");
+			toast.success("Thêm công việc thành công");
 		} else {
 			alert("Vui lòng nhập tên công việc");
 		}
