@@ -8,7 +8,7 @@ import { addTodo } from "../../redux/reducer";
 
 export default function TodoList() {
 	const dispatch = useDispatch();
-	const { todoList } = useSelector(todoListSelector);
+	const todoList = useSelector(todoListSelector);
 
 	const [todoName, setTodoName] = useState("");
 	const [priority, setPriority] = useState("Medium");
@@ -37,7 +37,13 @@ export default function TodoList() {
 				style={{ height: "calc(100% - 40px)", overflowY: "auto" }}
 			>
 				{todoList.map((todo) => (
-					<Todo key={todo.id} name={todo.name} priority={todo.priority} />
+					<Todo
+						key={todo.id}
+						id={todo.id}
+						name={todo.name}
+						priority={todo.priority}
+						completed={todo.completed}
+					/>
 				))}
 			</Col>
 			<Col span={24}>

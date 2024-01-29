@@ -17,12 +17,23 @@ const todoReducer = createSlice({
 			const todoItem = action.payload;
 			state.todoList.push(todoItem);
 		},
-		editTodo: (state, action) => {},
-		deleteTodo: (state, action) => {},
+		toggleCompletedTodo: (state, action) => {
+			const isCompleted = action.payload.completed;
+			const todoId = action.payload.id;
+			state.todoList = state.todoList.map((todoItem) =>
+				todoItem.id === todoId
+					? { ...todoItem, completed: isCompleted }
+					: todoItem
+			);
+		},
+		filters: (state, action) => {
+			const newFilters = action.payload;
+			state.filters = newFilters;
+		},
 	},
 });
 
 // Export
 const { reducer, actions } = todoReducer;
-export const { addTodo, editTodo, deleteTodo } = actions;
+export const { addTodo, toggleCompletedTodo, filters } = actions;
 export default reducer;
