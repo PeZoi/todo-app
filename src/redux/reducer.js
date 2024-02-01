@@ -25,6 +25,13 @@ const todoReducer = createSlice({
 			state.todoList.push(todoItem);
 			saveLocalStorage("todoList", state.todoList);
 		},
+		deleteTodo: (state, action) => {
+			const idTodo = action.payload;
+			state.todoList = state.todoList.filter((todo) => {
+				return todo.id !== idTodo;
+			});
+			saveLocalStorage("todoList", state.todoList);
+		},
 		toggleCompletedTodo: (state, action) => {
 			const isCompleted = action.payload.completed;
 			const todoId = action.payload.id;
@@ -44,5 +51,11 @@ const todoReducer = createSlice({
 
 // Export
 const { reducer, actions } = todoReducer;
-export const { addTodo, toggleCompletedTodo, filters, getTodoList } = actions;
+export const {
+	addTodo,
+	toggleCompletedTodo,
+	filters,
+	getTodoList,
+	deleteTodo,
+} = actions;
 export default reducer;

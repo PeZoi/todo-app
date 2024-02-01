@@ -44,10 +44,7 @@ export default function TodoList() {
 
 	return (
 		<Row style={{ height: "calc(100% - 40px)" }}>
-			<Col
-				span={24}
-				style={{ height: "calc(100% - 40px)", overflowY: "auto" }}
-			>
+			<Col span={24} style={{ height: "calc(100% - 40px)" }}>
 				{todoList.map((todo) => (
 					<Todo
 						key={todo.id}

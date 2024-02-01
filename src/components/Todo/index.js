@@ -1,7 +1,8 @@
 import { Row, Tag, Checkbox } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { toggleCompletedTodo } from "../../redux/reducer";
+import { toggleCompletedTodo, deleteTodo } from "../../redux/reducer";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const priorityColorMapping = {
 	High: "red",
@@ -18,26 +19,40 @@ export default function Todo({ name, priority, id, completed }) {
 		dispatch(toggleCompletedTodo({ id, completed: !checked }));
 	};
 
+	const handleDeleteTodo = () => {
+		if (window.confirm("Are you sure you want to delete ?")) {
+			dispatch(deleteTodo(id));
+		}
+	};
+
 	return (
 		<Row
-			justify='space-between'
 			style={{
 				marginBottom: 3,
 				...(checked
 					? { opacity: 0.5, textDecoration: "line-through" }
 					: {}),
 			}}
+			className='relative group'
 		>
-			<Checkbox
-				checked={checked}
-				onChange={toggleCheckbox}
-				style={{ flex: 1 }}
+			<div className='flex justify-between items-center w-full'>
+				<Checkbox
+					checked={checked}
+					onChange={toggleCheckbox}
+					className='flex-grow'
+				>
+					<span className='w-full'>{name}</span>
+				</Checkbox>
+				<Tag color={priorityColorMapping[priority]} style={{ margin: 0 }}>
+					{priority}
+				</Tag>
+			</div>
+			<button
+				className=' text-red-500 uppercase rounded-sm absolute top-0 -left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
+				onClick={handleDeleteTodo}
 			>
-				<span className='w-full'>{name}</span>
-			</Checkbox>
-			<Tag color={priorityColorMapping[priority]} style={{ margin: 0 }}>
-				{priority}
-			</Tag>
+				<DeleteOutlined />
+			</button>
 		</Row>
 	);
 }
