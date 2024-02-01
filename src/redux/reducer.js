@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { saveLocalStorage, getLocalStorage } from "../functions/localstorage";
 
 const initState = {
 	filters: {
@@ -13,9 +14,16 @@ const todoReducer = createSlice({
 	name: "todoList",
 	initialState: initState,
 	reducers: {
+		getTodoList: (state, actions) => {
+			const data = getLocalStorage("todoList");
+			if (data) {
+				state.todoList = data;
+			}
+		},
 		addTodo: (state, action) => {
 			const todoItem = action.payload;
 			state.todoList.push(todoItem);
+			saveLocalStorage("todoList", state.todoList);
 		},
 		toggleCompletedTodo: (state, action) => {
 			const isCompleted = action.payload.completed;
@@ -25,6 +33,7 @@ const todoReducer = createSlice({
 					? { ...todoItem, completed: isCompleted }
 					: todoItem
 			);
+			saveLocalStorage("todoList", state.todoList);
 		},
 		filters: (state, action) => {
 			const newFilters = action.payload;
@@ -35,5 +44,5 @@ const todoReducer = createSlice({
 
 // Export
 const { reducer, actions } = todoReducer;
-export const { addTodo, toggleCompletedTodo, filters } = actions;
+export const { addTodo, toggleCompletedTodo, filters, getTodoList } = actions;
 export default reducer;

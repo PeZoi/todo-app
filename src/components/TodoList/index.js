@@ -2,9 +2,9 @@ import { Col, Row, Input, Button, Select, Tag } from "antd";
 import Todo from "../Todo";
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { todoListSelector } from "../../redux/selector";
-import { addTodo } from "../../redux/reducer";
+import { addTodo, getTodoList } from "../../redux/reducer";
 import toast from "react-hot-toast";
 
 export default function TodoList() {
@@ -32,6 +32,16 @@ export default function TodoList() {
 		}
 	};
 
+	const handleKeyPress = (event) => {
+		if (event.key === "Enter") {
+			handleAddButtonClick();
+		}
+	};
+
+	useEffect(() => {
+		dispatch(getTodoList());
+	}, [dispatch]);
+
 	return (
 		<Row style={{ height: "calc(100% - 40px)" }}>
 			<Col
@@ -53,6 +63,7 @@ export default function TodoList() {
 					<Input
 						value={todoName}
 						onChange={(e) => setTodoName(e.target.value)}
+						onKeyPress={handleKeyPress}
 					/>
 					<Select
 						defaultValue='Medium'
